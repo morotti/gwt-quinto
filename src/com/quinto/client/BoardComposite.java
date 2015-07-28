@@ -242,14 +242,22 @@ public class BoardComposite extends Composite {
 		levelLabel.setValue(new Integer(level));
 
 		if (level == 1) {
-			// level 1 is tutorial
-			// click in the center !
+			// level 1 is tutorial: click on the center cell to understand the game.
 			// X-X
 			// ---
 			// X-X
 			generateGrid(3);
 
-			grid.setText(1, 1, "Click me !");
+			// issue : the grid autosizes itself based on content => the 'click me !' cell gets bigger than all other cells
+			// hack : fill all empty cells with non-breakable spaces 
+			for (int y = 0; y < grid.getRowCount(); y++) {
+				for (int x = 0; x < grid.getColumnCount(); x++) {
+					grid.setHTML(y, x,
+							"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+				}
+			}
+
+			grid.setHTML(1, 1, "Click me !");
 
 			board.flip(0, 0);
 			board.flip(0, 2);
