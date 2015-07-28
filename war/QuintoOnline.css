@@ -49,24 +49,6 @@ a:visited {
 	background-color: #C3D9FF;
 }
 
-.gwt-StackPanel {
-	background-color: white;
-	border: 1px solid #AAAAAA;
-	width: 15em;
-}
-
-.gwt-StackPanel .gwt-StackPanelItem {
-	background-image: url(blue_gradient.gif);
-	background-repeat: repeat-x;
-	background-color: #EEEEEE;
-	cursor: pointer;
-	cursor: hand;
-}
-
-.gwt-StackPanel .gwt-StackPanelItem-selected {
-	
-}
-
 .gwt-TabPanel {
 	
 }
