@@ -11,7 +11,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
@@ -36,61 +35,84 @@ public class BoardComposite extends Composite {
 		FlowPanel flowPanel = new FlowPanel();
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
-		horizontalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		flowPanel.add(horizontalPanel);
-
-		CaptionPanel cptnpnlNewPanel_2 = new CaptionPanel("New panel");
-		cptnpnlNewPanel_2.setCaptionHTML("Stats");
-		horizontalPanel.add(cptnpnlNewPanel_2);
-		cptnpnlNewPanel_2.setSize("", "");
+		horizontalPanel.setSize("", "");
+		horizontalPanel.setStyleName("levelstatspanel");
 
 		Grid grid_1 = new Grid(3, 2);
-		cptnpnlNewPanel_2.setContentWidget(grid_1);
-		grid_1.setSize("", "");
+		grid_1.setStyleName("statspanel");
+		grid_1.setBorderWidth(0);
+		horizontalPanel.add(grid_1);
+		horizontalPanel.setCellVerticalAlignment(grid_1, HasVerticalAlignment.ALIGN_MIDDLE);
+		horizontalPanel.setCellHorizontalAlignment(grid_1, HasHorizontalAlignment.ALIGN_CENTER);
+		grid_1.setSize("64px", "64px");
 
-		Label lblNewLabel_1 = new Label("Blacks");
+		Label lblNewLabel_1 = new Label("Blacks: ");
 		grid_1.setWidget(0, 0, lblNewLabel_1);
 
 		blacksCountLabel = new NumberLabel<Integer>();
+		blacksCountLabel.setStyleName("boldtext");
 		grid_1.setWidget(0, 1, blacksCountLabel);
 
-		Label lblNewLabel_4 = new Label("Whites");
+		Label lblNewLabel_4 = new Label("Whites: ");
 		grid_1.setWidget(1, 0, lblNewLabel_4);
 
 		whitesCountLabel = new NumberLabel<Integer>();
+		whitesCountLabel.setStyleName("boldtext");
 		grid_1.setWidget(1, 1, whitesCountLabel);
 
-		Label lblNewLabel = new Label("Clicks");
+		Label lblNewLabel = new Label("Clicks: ");
 		grid_1.setWidget(2, 0, lblNewLabel);
 
 		clicksCountLabel = new NumberLabel<Integer>();
+		clicksCountLabel.setStyleName("boldtext");
 		grid_1.setWidget(2, 1, clicksCountLabel);
+		grid_1.getCellFormatter().setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_MIDDLE);
+		grid_1.getCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_LEFT);
+		grid_1.getCellFormatter().setVerticalAlignment(0, 1, HasVerticalAlignment.ALIGN_MIDDLE);
+		grid_1.getCellFormatter().setVerticalAlignment(1, 0, HasVerticalAlignment.ALIGN_MIDDLE);
+		grid_1.getCellFormatter().setHorizontalAlignment(1, 1, HasHorizontalAlignment.ALIGN_LEFT);
+		grid_1.getCellFormatter().setVerticalAlignment(1, 1, HasVerticalAlignment.ALIGN_MIDDLE);
+		grid_1.getCellFormatter().setVerticalAlignment(2, 0, HasVerticalAlignment.ALIGN_MIDDLE);
+		grid_1.getCellFormatter().setHorizontalAlignment(2, 1, HasHorizontalAlignment.ALIGN_LEFT);
+		grid_1.getCellFormatter().setVerticalAlignment(2, 1, HasVerticalAlignment.ALIGN_MIDDLE);
+		grid_1.getCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_LEFT);
+		grid_1.getCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_LEFT);
+		grid_1.getCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_LEFT);
 
-		DecoratorPanel decoratorPanel = new DecoratorPanel();
-		horizontalPanel.add(decoratorPanel);
-		decoratorPanel.setSize("80", "80");
+		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
+		flowPanel.add(horizontalPanel_1);
+		horizontalPanel_1.setStyleName("gamestatspanel");
+		horizontalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
-		CaptionPanel cptnpnlNewPanel = new CaptionPanel("");
-		cptnpnlNewPanel.setCaptionHTML("Points");
-		decoratorPanel.setWidget(cptnpnlNewPanel);
-		cptnpnlNewPanel.setSize("80", "80");
+		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		verticalPanel.setStyleName("statsbox");
+		horizontalPanel_1.add(verticalPanel);
+		verticalPanel.setSize("64px", "64px");
+
+		Label lblNewLabel_3 = new Label("POINTS");
+		lblNewLabel_3.setStyleName("boldtext");
+		verticalPanel.add(lblNewLabel_3);
 
 		pointsLabel = new NumberLabel<Integer>();
+		pointsLabel.setStyleName("bigboldtext");
+		verticalPanel.add(pointsLabel);
 		pointsLabel.setValue(new Integer(0));
-		cptnpnlNewPanel.setContentWidget(pointsLabel);
-		pointsLabel.setSize("5cm", "3cm");
 
-		DecoratorPanel decoratorPanel_1 = new DecoratorPanel();
-		horizontalPanel.add(decoratorPanel_1);
-		decoratorPanel_1.setSize("80", "80");
+		VerticalPanel verticalPanel_2 = new VerticalPanel();
+		verticalPanel_2.setStyleName("statsbox");
+		verticalPanel_2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		horizontalPanel_1.add(verticalPanel_2);
+		verticalPanel_2.setSize("64px", "64px");
 
-		CaptionPanel cptnpnlNewPanel_1 = new CaptionPanel("New panel");
-		cptnpnlNewPanel_1.setCaptionHTML("Level");
-		decoratorPanel_1.setWidget(cptnpnlNewPanel_1);
+		Label lblNewLabel_2 = new Label("LEVEL");
+		lblNewLabel_2.setStyleName("boldtext");
+		verticalPanel_2.add(lblNewLabel_2);
 
 		levelLabel = new NumberLabel<Integer>();
-		cptnpnlNewPanel_1.setContentWidget(levelLabel);
-		levelLabel.setSize("5cm", "3cm");
+		levelLabel.setStyleName("bigboldtext");
+		verticalPanel_2.add(levelLabel);
 		flowPanel.add(grid);
 
 		grid.addClickHandler(new ClickHandler() {
@@ -106,13 +128,13 @@ public class BoardComposite extends Composite {
 		initWidget(flowPanel);
 		grid.setSize("480px", "480px");
 
-		grid.setStyleName("grid-without-cell-borders");
+		grid.setStyleName("board");
 		grid.setBorderWidth(0);
-		
+
 		VerticalPanel verticalPanel_1 = new VerticalPanel();
 		verticalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		flowPanel.add(verticalPanel_1);
-		
+
 		Button retryButton = new Button("Retry");
 		retryButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -235,6 +257,7 @@ public class BoardComposite extends Composite {
 			board.flip(2, 2);
 
 			updateAllCells();
+			updateCounters();
 		}
 		else {
 			generateGrid(level);

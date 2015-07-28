@@ -24,7 +24,7 @@ public class QuintoOnline implements EntryPoint {
 	private BoardComposite boardComposite;
 
 	public void onModuleLoad() {
-		RootPanel rootPanel = RootPanel.get("page-container");
+		RootPanel rootPanel = RootPanel.get("content");
 
 		boardComposite = new BoardComposite(3);
 		rootPanel.add(boardComposite);

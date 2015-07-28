@@ -2,9 +2,9 @@
 	padding: 0px;
 	border: 10px solid #D3D3D3;
 	background: #000000;
-	align: center;
 	transition: background-color 400ms ease-out;
 }
+
 .white-cell {
 	padding: 0px;
 	border: 10px solid #D3D3D3;
@@ -12,6 +12,8 @@
 	transition: background-color 400ms ease-out;
 }
 
-.grid-without-cell-borders{
-   border-collapse: collapse;
+.board {
+	border-collapse: collapse;
+	clear: both;
+	margin: 0 auto;
 }

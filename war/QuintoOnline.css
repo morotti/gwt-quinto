@@ -1,19 +1,5 @@
-body {
-	background-color: white;
-	color: black;
-	font-family: Arial, sans-serif;
-	font-size: small;
-	margin: 5px;
-}
-
 a {
 	color: darkblue;
-}
-
-div#page-container {
-	width: 640px;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 a:visited {
@@ -316,6 +302,9 @@ a:visited {
 	background-color: #e8eef7;
 	cursor: hand;
 }
-.
-{
+.gwt-Label {
+	font-size: small;
+	font-weight: normal;
+}
+.statspanel {
 }
