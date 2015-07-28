@@ -17,6 +17,10 @@ a:visited {
 	font-weight: bold;
 }
 
+.gwt-PopupPanel .popupContent {
+	padding: 16px;
+}
+
 .gwt-MenuBar {
 	background-color: #C3D9FF;
 	cursor: default;
@@ -299,9 +303,12 @@ a:visited {
 	background-color: #e8eef7;
 	cursor: hand;
 }
+
 .gwt-Label {
 	font-size: small;
 	font-weight: normal;
 }
+
 .statspanel {
+	
 }

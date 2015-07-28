@@ -1,23 +1,16 @@
 package com.quinto.client;
 
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Label;
 
-public class MessageBox extends DialogBox {
+public class MessageBox extends PopupPanel {
 
 	public MessageBox(String msg) {
-		setHTML(msg);
+		super(true, true);
+		setGlassEnabled(true);
 
-		Button btnNewButton = new Button("Close");
-		btnNewButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				MessageBox.this.hide();
-			}
-		});
-		setWidget(btnNewButton);
-		btnNewButton.setSize("100%", "100%");
+		Label label = new Label(msg);
+		setWidget(label);
 	}
 
 }
