@@ -202,7 +202,7 @@ public class BoardComposite extends Composite {
 	}
 
 	private void onVictory() {
-		final MessageBox victoryMessageBox = new MessageBox("You won !");
+		final MessageBox victoryMessageBox = new MessageBox("Level completed !");
 		victoryMessageBox.center();
 
 		Timer t = new Timer() {

@@ -9,15 +9,12 @@ a:visited {
 .gwt-DialogBox {
 	border: 2px solid #AAAAAA;
 	background-color: white;
+	padding: 16px;
 }
 
 .gwt-DialogBox .Caption {
-	background-image: url(gray_gradient.gif);
-	background-repeat: repeat-x;
-	padding: 4px;
-	padding-bottom: 8px;
+	background: #EBEBEB;
 	font-weight: bold;
-	cursor: default;
 }
 
 .gwt-MenuBar {
