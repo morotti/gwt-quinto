@@ -224,18 +224,20 @@ public class BoardComposite extends Composite {
 		int level = levelLabel.getValue().intValue();
 		int clicks = clicksCountLabel.getValue().intValue();
 
-		// update points
-		if (level == 1) {
-			points++;
-		}
-		else {
-			// rough estimation
-			int minClicks = (int) Math.floor(level * 0.60);
-			points += level;
-			points += Math.max(0, level + minClicks - clicks);
-		}
+		points += estimateCurrentPoints(level, clicks);
 
 		pointsLabel.setValue(new Integer(points));
+	}
+
+	private static int estimateCurrentPoints(int level, int clicks) {
+		int points = 0;
+		int minClicks = (int) Math.floor(level * 0.60);
+
+		points += level;
+		points += Math.max(0, level + minClicks - clicks);
+
+		// add a 0 makes more impressive scores
+		return points * 10;
 	}
 
 	protected void gotoLevel(int level) {
