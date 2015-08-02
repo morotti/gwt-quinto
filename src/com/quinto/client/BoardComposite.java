@@ -29,7 +29,7 @@ public class BoardComposite extends Composite {
 
 	public BoardComposite(int side) {
 
-		board = new Board(3);
+		board = new Board(3, 3);
 		grid = new Grid(3, 3);
 
 		FlowPanel flowPanel = new FlowPanel();
@@ -147,14 +147,14 @@ public class BoardComposite extends Composite {
 		gotoLevel(1);
 	}
 
-	public void generateGrid(int side) {
+	public void generateGrid(int width, int height) {
 		grid.clear();
-		grid.resize(side, side);
-		board.generate(side);
+		grid.resize(width, height);
+		board.generate(width, height);
 
 		// add text widget to each cell
-		for (int y = 0; y < side; y++) {
-			for (int x = 0; x < side; x++) {
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
 				//grid.setWidget(y, x, new Label("(" + x + "," + y + ")"));
 
 				grid.getCellFormatter().setAlignment(y, x, HasHorizontalAlignment.ALIGN_CENTER,
@@ -165,8 +165,8 @@ public class BoardComposite extends Composite {
 		}
 
 		// update color
-		for (int y = 0; y < side; y++) {
-			for (int x = 0; x < side; x++) {
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
 				updateCell(x, y);
 			}
 		}
@@ -184,13 +184,13 @@ public class BoardComposite extends Composite {
 		if (y > 0)
 			updateCell(x, y - 1);
 
-		if (y < board.getSide() - 1)
+		if (y < board.getHeight() - 1)
 			updateCell(x, y + 1);
 
 		if (x > 0)
 			updateCell(x - 1, y);
 
-		if (x < board.getSide() - 1)
+		if (x < board.getWidth() - 1)
 			updateCell(x + 1, y);
 
 		updateCounters();
@@ -248,7 +248,7 @@ public class BoardComposite extends Composite {
 			// X-X
 			// ---
 			// X-X
-			generateGrid(3);
+			generateGrid(3, 3);
 
 			// issue : the grid autosizes itself based on content => the 'click me !' cell gets bigger than all other cells
 			// hack : fill all empty cells with non-breakable spaces 
@@ -270,7 +270,7 @@ public class BoardComposite extends Composite {
 			updateCounters();
 		}
 		else {
-			generateGrid(level);
+			generateGrid(level, level);
 		}
 	}
 

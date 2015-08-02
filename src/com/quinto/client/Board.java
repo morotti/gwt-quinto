@@ -4,13 +4,11 @@ package com.quinto.client;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Board {
-	int side;
-
-	// cell[y][x]
+	// cell = board[y][x];
 	boolean board[][];
 
-	Board(int side) {
-		generate(side);
+	Board(int width, int height) {
+		generate(width, height);
 	}
 
 	/**
@@ -28,13 +26,13 @@ public class Board {
 		if (x > 0)
 			flip(x - 1, y);
 
-		if (x < side - 1)
+		if (x < getWidth() - 1)
 			flip(x + 1, y);
 
 		if (y > 0)
 			flip(x, y - 1);
 
-		if (y < side - 1)
+		if (y < getHeight() - 1)
 			flip(x, y + 1);
 	}
 
@@ -43,21 +41,27 @@ public class Board {
 	 * 
 	 * @param side
 	 */
-	void generate(int side) {
-		this.side = side;
-		this.board = new boolean[side][side];
+	void generate(int width, int height) {
+		this.board = new boolean[height][width];
 	}
 
-	boolean isWon()
-	{
-		return countBlacks() == side * side;
+	int getHeight() {
+		return board.length;
+	}
+
+	int getWidth() {
+		return board[0].length;
+	}
+
+	boolean isWon() {
+		return countBlacks() == getWidth() * getHeight();
 	}
 
 	int countBlacks() {
 		int count = 0;
 
-		for (int y = 0; y < side; y++) {
-			for (int x = 0; x < side; x++) {
+		for (int y = 0; y < getHeight(); y++) {
+			for (int x = 0; x < getWidth(); x++) {
 				if (board[y][x] == true)
 					count++;
 			}
@@ -67,7 +71,7 @@ public class Board {
 	}
 
 	int countWhites() {
-		return side * side - countBlacks();
+		return getWidth() * getHeight() - countBlacks();
 	}
 
 	void set(int x, int y) {
@@ -89,10 +93,4 @@ public class Board {
 	boolean get(int x, int y) {
 		return board[y][x];
 	}
-	
-	int getSide()
-	{
-		return this.side;
-	}
-
 }
