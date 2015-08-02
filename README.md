@@ -7,7 +7,7 @@ This project is an online quinto game.
 
 The quinto game is played on black and white board like this.
 
-!(example.png)
+!(https://github.com/morotti/quinto/blob/master/example.png)
 
 Click on a cell to reverse its color and the colors of its neighbors.
 
