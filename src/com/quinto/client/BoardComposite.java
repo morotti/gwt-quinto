@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 
 public class BoardComposite extends Composite {
@@ -116,6 +115,7 @@ public class BoardComposite extends Composite {
 		flowPanel.add(grid);
 
 		grid.addClickHandler(new ClickHandler() {
+			@Override
 			public void onClick(ClickEvent event) {
 				Cell cell = grid.getCellForEvent(event);
 
@@ -137,6 +137,7 @@ public class BoardComposite extends Composite {
 
 		Button retryButton = new Button("Retry");
 		retryButton.addClickHandler(new ClickHandler() {
+			@Override
 			public void onClick(ClickEvent event) {
 				int level = levelLabel.getValue().intValue();
 				gotoLevel(level);
@@ -149,7 +150,7 @@ public class BoardComposite extends Composite {
 
 	public void generateGrid(int width, int height) {
 		grid.clear();
-		grid.resize(width, height);
+		grid.resize(height, width);
 		board.generate(width, height);
 
 		// add text widget to each cell
@@ -173,7 +174,6 @@ public class BoardComposite extends Composite {
 
 		updateCounters();
 		resetClicks();
-
 	}
 
 	public void click(int x, int y) {
@@ -270,7 +270,15 @@ public class BoardComposite extends Composite {
 			updateCounters();
 		}
 		else {
-			generateGrid(level, level);
+			// level -> [x,y]
+			//     2 -> [2,2]
+			//     3 -> [3,2] x++
+			//     4 -> [3,3] y++
+
+			int width = ((level + 2) / 2) + (level % 2);
+			int height = ((level + 2) / 2);
+
+			generateGrid(width, height);
 		}
 	}
 
