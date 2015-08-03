@@ -12,6 +12,12 @@ p {
 	padding: 10px;
 }
 
+.starbox {
+	width: 48px;
+	height: 48px;
+	vertical-align: center;
+}
+
 .bigboldtext {
 	font-size: 24px;
 	font-weight: bold;

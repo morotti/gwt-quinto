@@ -202,16 +202,30 @@ public class BoardComposite extends Composite {
 	}
 
 	private void onVictory() {
-		final MessageBox victoryMessageBox = new MessageBox("Level completed !");
-		victoryMessageBox.center();
+		int points = pointsLabel.getValue().intValue();
+		int level = levelLabel.getValue().intValue();
+		int clicks = clicksCountLabel.getValue().intValue();
+		int width = grid.getColumnCount();
+		int height = grid.getRowCount();
 
+		// update points
+		points += estimatePoints(level, width, height, clicks);
+		pointsLabel.setValue(new Integer(points));
+
+		// estimate rating
+		int rating = estimateRating(width, height, clicks);
+
+		// popup victorybox
+		final VictoryBox victoryBox = new VictoryBox(
+				"Level " + Integer.toString(level) + " completed !", rating);
+		victoryBox.center();
+
+		// autoclose the victory box and switch to the next level after a few seconds
 		Timer t = new Timer() {
 			@Override
 			public void run() {
-				// switch to the next level
-				victoryMessageBox.hide();
+				victoryBox.hide();
 
-				// go to next level
 				int level = levelLabel.getValue().intValue();
 				BoardComposite.this.gotoLevel(level + 1);
 			}
@@ -219,25 +233,64 @@ public class BoardComposite extends Composite {
 
 		t.schedule(2000);
 
-		// update points
-		int points = pointsLabel.getValue().intValue();
-		int level = levelLabel.getValue().intValue();
-		int clicks = clicksCountLabel.getValue().intValue();
-
-		points += estimateCurrentPoints(level, clicks);
-
-		pointsLabel.setValue(new Integer(points));
 	}
 
-	private static int estimateCurrentPoints(int level, int clicks) {
+	/**
+	 * 
+	 * @param width
+	 * @param height
+	 * @param clicks
+	 * @return rating between 0 and 3
+	 */
+	private int estimateRating(int width, int height, int clicks) {
+		int minClicks = getMinClicks(width, height);
+
+		// player did the minimum possible clicks => awesome
+		if (clicks <= minClicks)
+			return 3;
+
+		// player did more clicks than the number of cells on the grid => not optimal
+		// (clicking twice a cell cancel the action)
+		if (clicks > width * height)
+			return 1;
+
+		// something between
+		return 2;
+	}
+
+	private static int estimatePoints(int level, int width, int height, int clicks) {
 		int points = 0;
-		int minClicks = (int) Math.floor(level * 0.60);
+		int minClicks = getMinClicks(width, height);
 
 		points += level;
 		points += Math.max(0, level + minClicks - clicks);
 
-		// add a 0 makes more impressive scores
+		// add a 0 to make more impressive scores
 		return points * 10;
+	}
+
+	private static int getMinClicks(int width, int height) {
+		// @formatter:off
+		
+		// square grids
+		if(width == 1 && height == 1)       return 1;
+		else if (width == 2 && height == 2)	return 4;
+		else if (width == 3 && height == 3)	return 5;
+		else if (width == 4 && height == 4)	return 10;
+		else if (width == 5 && height == 5)	return 15;
+		else if (width == 6 && height == 6)	return 28;
+		else if (width == 7 && height == 7)	return 27;
+		else if (width == 8 && height == 8)	return 40;
+		else if (width == 8 && height == 8)	return 39;
+		
+		// rectangular grids
+		else if (width == 2 && height == 1)	return 1;
+		else if (width == 3 && height == 2)	return 4;
+
+		// default
+		else return (int) Math.floor(width * height * 0.60);
+		
+		// @formatter:on
 	}
 
 	protected void gotoLevel(int level) {
