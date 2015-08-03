@@ -32,14 +32,18 @@ public class BoardComposite extends Composite {
 		grid = new Grid(3, 3);
 
 		FlowPanel flowPanel = new FlowPanel();
+		
+		FlowPanel flowPanel_2 = new FlowPanel();
+		flowPanel_2.setStyleName("statspanel");
+		flowPanel.add(flowPanel_2);
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
-		flowPanel.add(horizontalPanel);
+		flowPanel_2.add(horizontalPanel);
+		horizontalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		horizontalPanel.setSize("", "");
 		horizontalPanel.setStyleName("levelstatspanel");
 
 		Grid grid_1 = new Grid(3, 2);
-		grid_1.setStyleName("statspanel");
 		grid_1.setBorderWidth(0);
 		horizontalPanel.add(grid_1);
 		horizontalPanel.setCellVerticalAlignment(grid_1, HasVerticalAlignment.ALIGN_MIDDLE);
@@ -80,11 +84,12 @@ public class BoardComposite extends Composite {
 		grid_1.getCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_LEFT);
 
 		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
-		flowPanel.add(horizontalPanel_1);
+		flowPanel_2.add(horizontalPanel_1);
 		horizontalPanel_1.setStyleName("gamestatspanel");
 		horizontalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 
 		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel.setStyleName("statsbox");
 		horizontalPanel_1.add(verticalPanel);
@@ -100,6 +105,7 @@ public class BoardComposite extends Composite {
 		pointsLabel.setValue(new Integer(0));
 
 		VerticalPanel verticalPanel_2 = new VerticalPanel();
+		verticalPanel_2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		verticalPanel_2.setStyleName("statsbox");
 		verticalPanel_2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		horizontalPanel_1.add(verticalPanel_2);
@@ -113,6 +119,7 @@ public class BoardComposite extends Composite {
 		levelLabel.setStyleName("bigboldtext");
 		verticalPanel_2.add(levelLabel);
 		flowPanel.add(grid);
+		grid.setSize("", "");
 
 		grid.addClickHandler(new ClickHandler() {
 			@Override
@@ -126,24 +133,41 @@ public class BoardComposite extends Composite {
 			}
 		});
 		initWidget(flowPanel);
-		grid.setSize("480px", "480px");
+		flowPanel.setSize("", "");
 
 		grid.setStyleName("board");
 		grid.setBorderWidth(0);
-
-		VerticalPanel verticalPanel_1 = new VerticalPanel();
-		verticalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		flowPanel.add(verticalPanel_1);
-
-		Button retryButton = new Button("Retry");
-		retryButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				int level = levelLabel.getValue().intValue();
-				gotoLevel(level);
-			}
-		});
-		verticalPanel_1.add(retryButton);
+		
+		FlowPanel flowPanel_1 = new FlowPanel();
+		flowPanel_1.setStyleName("levelmanagementpanel");
+		flowPanel.add(flowPanel_1);
+		
+		HorizontalPanel horizontalPanel_3 = new HorizontalPanel();
+		flowPanel_1.add(horizontalPanel_3);
+		horizontalPanel_3.setStyleName("changelevelpanel");
+		horizontalPanel_3.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		
+		Button previousLevelButton = new Button("Previous Level");
+		horizontalPanel_3.add(previousLevelButton);
+		
+		Button nextLevelButton = new Button("Next Level");
+		horizontalPanel_3.add(nextLevelButton);
+		
+		HorizontalPanel horizontalPanel_4 = new HorizontalPanel();
+		flowPanel_1.add(horizontalPanel_4);
+		horizontalPanel_4.setStyleName("retrypanel");
+		horizontalPanel_4.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+		horizontalPanel_4.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		
+				Button retryButton = new Button("Retry");
+				horizontalPanel_4.add(retryButton);
+				retryButton.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						int level = levelLabel.getValue().intValue();
+						gotoLevel(level);
+					}
+				});
 
 		gotoLevel(1);
 	}

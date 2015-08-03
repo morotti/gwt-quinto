@@ -29,7 +29,7 @@ p {
 
 .statsbox {
 	color: #000000 !important;
-	padding: 16px 16px;
+	padding: 16px;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
@@ -38,13 +38,24 @@ p {
 	margin: 10px;
 }
 
+.levelmanagementpanel {
+	clear: both;
+}
+
+.changelevelpanel {
+	float: left;
+	width: 220px;
+	height: 40px;
+}
+
+.retrypanel {
+	float: right;
+	width: 80px;
+	height: 40px;
+}
+
 .statspanel {
-	color: #000000 !important;
-	padding: 16px 16px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	border-radius: 8px;
-	margin: 10px;
+	clear: both;
 }
 
 .levelstatspanel {
@@ -109,6 +120,14 @@ p {
 	width: 500px;
 	padding: 50px;
 	float: left;
+}
+
+#game {
+	clear: both;
+}
+
+#game-help{
+	clear: both;
 }
 
 #footer {
