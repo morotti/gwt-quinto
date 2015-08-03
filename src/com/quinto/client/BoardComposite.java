@@ -286,6 +286,8 @@ public class BoardComposite extends Composite {
 		// rectangular grids
 		else if (width == 2 && height == 1)	return 1;
 		else if (width == 3 && height == 2)	return 4;
+		else if (width == 4 && height == 3)	return 10;
+		else if (width == 5 && height == 4)	return 10;
 
 		// default
 		else return (int) Math.floor(width * height * 0.60);
