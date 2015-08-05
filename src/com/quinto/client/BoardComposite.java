@@ -393,7 +393,7 @@ public class BoardComposite extends Composite {
 		else
 			previousLevelButton.setEnabled(true);
 
-		if (level < getHighestLevelCompleted())
+		if (level <= getHighestLevelCompleted())
 			nextLevelButton.setEnabled(true);
 		else
 			nextLevelButton.setEnabled(false);
