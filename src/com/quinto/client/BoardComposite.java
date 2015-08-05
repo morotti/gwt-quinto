@@ -144,7 +144,6 @@ public class BoardComposite extends Composite {
 		flowPanel.setSize("", "");
 
 		grid.setStyleName("board");
-		grid.setBorderWidth(0);
 
 		FlowPanel flowPanel_1 = new FlowPanel();
 		flowPanel_1.setStyleName("levelmanagementpanel");
