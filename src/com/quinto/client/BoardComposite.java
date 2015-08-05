@@ -363,8 +363,6 @@ public class BoardComposite extends Composite {
 			board.flip(2, 0);
 			board.flip(2, 2);
 
-			grid.setHTML(1, 1, "Click me !");
-
 			// issue : the grid autosizes itself based on content => the 'click me !' cell gets bigger than all other cells
 			// hack : fill all empty cells with non-breakable spaces
 			for (int y = 0; y < grid.getRowCount(); y++) {
@@ -373,6 +371,8 @@ public class BoardComposite extends Composite {
 							"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 				}
 			}
+
+			grid.setHTML(1, 1, "Click me !");
 
 			updateAllCells();
 			updateCounters();
