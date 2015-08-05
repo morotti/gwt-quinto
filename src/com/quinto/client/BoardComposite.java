@@ -17,6 +17,8 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.event.logical.shared.AttachEvent.Handler;
+import com.google.gwt.event.logical.shared.AttachEvent;
 
 public class BoardComposite extends Composite {
 
@@ -38,6 +40,15 @@ public class BoardComposite extends Composite {
 
 		board = new Board(3, 3);
 		grid = new Grid(3, 3);
+		grid.addAttachHandler(new Handler() {
+			@Override
+			public void onAttachOrDetach(AttachEvent event) {
+				int pixels = grid.getOffsetWidth();
+				
+				grid.setWidth(pixels + "px");
+				grid.setHeight(pixels + "px");
+			}
+		});
 
 		FlowPanel flowPanel = new FlowPanel();
 
