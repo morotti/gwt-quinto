@@ -199,6 +199,9 @@ public class BoardComposite extends Composite {
 
 	public void generateGrid(int width, int height) {
 		grid.clear();
+		// issue : some borders disappear when resizing the grid from and to some specific sizes, there is no know explanation
+		// hack : resize the grid to 1,1 before resizing to the intended size
+		grid.resize(1, 1);
 		grid.resize(height, width);
 		board.generate(width, height);
 
