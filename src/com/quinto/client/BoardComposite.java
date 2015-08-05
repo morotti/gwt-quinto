@@ -8,6 +8,9 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.NumberLabel;
 import com.google.gwt.event.dom.client.ClickHandler;
+
+import java.util.HashMap;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -20,11 +23,16 @@ public class BoardComposite extends Composite {
 	Board board;
 	Grid grid;
 
+	// stats<level, clicks>
+	private HashMap<Integer, Integer> scoreBoard = new HashMap<Integer, Integer>();
+
 	private NumberLabel<Integer> blacksCountLabel;
 	private NumberLabel<Integer> whitesCountLabel;
 	private NumberLabel<Integer> clicksCountLabel;
 	private NumberLabel<Integer> pointsLabel;
 	private NumberLabel<Integer> levelLabel;
+	private Button previousLevelButton;
+	private Button nextLevelButton;
 
 	public BoardComposite(int side) {
 
@@ -32,7 +40,7 @@ public class BoardComposite extends Composite {
 		grid = new Grid(3, 3);
 
 		FlowPanel flowPanel = new FlowPanel();
-		
+
 		FlowPanel flowPanel_2 = new FlowPanel();
 		flowPanel_2.setStyleName("statspanel");
 		flowPanel.add(flowPanel_2);
@@ -137,37 +145,55 @@ public class BoardComposite extends Composite {
 
 		grid.setStyleName("board");
 		grid.setBorderWidth(0);
-		
+
 		FlowPanel flowPanel_1 = new FlowPanel();
 		flowPanel_1.setStyleName("levelmanagementpanel");
 		flowPanel.add(flowPanel_1);
-		
+
 		HorizontalPanel horizontalPanel_3 = new HorizontalPanel();
 		flowPanel_1.add(horizontalPanel_3);
 		horizontalPanel_3.setStyleName("changelevelpanel");
 		horizontalPanel_3.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		
-		Button previousLevelButton = new Button("Previous Level");
+
+		previousLevelButton = new Button("Previous Level");
+		previousLevelButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				// go to previous level
+				int level = BoardComposite.this.levelLabel.getValue();
+				if (level > 1)
+					BoardComposite.this.gotoLevel(level - 1);
+			}
+		});
 		horizontalPanel_3.add(previousLevelButton);
-		
-		Button nextLevelButton = new Button("Next Level");
+
+		nextLevelButton = new Button("Next Level");
+		nextLevelButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				// go to next level
+				int level = BoardComposite.this.levelLabel.getValue();
+				BoardComposite.this.gotoLevel(level + 1);
+			}
+		});
 		horizontalPanel_3.add(nextLevelButton);
-		
+
 		HorizontalPanel horizontalPanel_4 = new HorizontalPanel();
 		flowPanel_1.add(horizontalPanel_4);
 		horizontalPanel_4.setStyleName("retrypanel");
 		horizontalPanel_4.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		horizontalPanel_4.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		
-				Button retryButton = new Button("Retry");
-				horizontalPanel_4.add(retryButton);
-				retryButton.addClickHandler(new ClickHandler() {
-					@Override
-					public void onClick(ClickEvent event) {
-						int level = levelLabel.getValue().intValue();
-						gotoLevel(level);
-					}
-				});
+
+		Button retryButton = new Button("Retry");
+		horizontalPanel_4.add(retryButton);
+		retryButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				// restart current level
+				int level = levelLabel.getValue().intValue();
+				gotoLevel(level);
+			}
+		});
 
 		gotoLevel(1);
 	}
@@ -177,15 +203,13 @@ public class BoardComposite extends Composite {
 		grid.resize(height, width);
 		board.generate(width, height);
 
-		// add text widget to each cell
+		// format all cells
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				//grid.setWidget(y, x, new Label("(" + x + "," + y + ")"));
-
 				grid.getCellFormatter().setAlignment(y, x, HasHorizontalAlignment.ALIGN_CENTER,
 						HasVerticalAlignment.ALIGN_MIDDLE);
 
-				grid.setText(y, x, "");
+				grid.setHTML(y, x, "");
 			}
 		}
 
@@ -235,6 +259,9 @@ public class BoardComposite extends Composite {
 		// update points
 		points += estimatePoints(level, width, height, clicks);
 		pointsLabel.setValue(new Integer(points));
+
+		// update scoreboard
+		setScoreIfBetter(level, clicks);
 
 		// estimate rating
 		int rating = estimateRating(width, height, clicks);
@@ -322,6 +349,7 @@ public class BoardComposite extends Composite {
 	protected void gotoLevel(int level) {
 		levelLabel.setValue(new Integer(level));
 
+		// special case : tutorial level
 		if (level == 1) {
 			// level 1 is tutorial: click on the center cell to understand the game.
 			// X-X
@@ -329,8 +357,15 @@ public class BoardComposite extends Composite {
 			// X-X
 			generateGrid(3, 3);
 
+			board.flip(0, 0);
+			board.flip(0, 2);
+			board.flip(2, 0);
+			board.flip(2, 2);
+
+			grid.setHTML(1, 1, "Click me !");
+
 			// issue : the grid autosizes itself based on content => the 'click me !' cell gets bigger than all other cells
-			// hack : fill all empty cells with non-breakable spaces 
+			// hack : fill all empty cells with non-breakable spaces
 			for (int y = 0; y < grid.getRowCount(); y++) {
 				for (int x = 0; x < grid.getColumnCount(); x++) {
 					grid.setHTML(y, x,
@@ -338,27 +373,31 @@ public class BoardComposite extends Composite {
 				}
 			}
 
-			grid.setHTML(1, 1, "Click me !");
-
-			board.flip(0, 0);
-			board.flip(0, 2);
-			board.flip(2, 0);
-			board.flip(2, 2);
-
 			updateAllCells();
 			updateCounters();
 		}
 		else {
 			// level -> [x,y]
 			//     2 -> [2,2]
-			//     3 -> [3,2] x++
-			//     4 -> [3,3] y++
+			//  even -> [3,2] x++
+			//   odd -> [3,3] y++
 
 			int width = ((level + 2) / 2) + (level % 2);
 			int height = ((level + 2) / 2);
 
 			generateGrid(width, height);
 		}
+
+		// enable/disable buttons to change levels
+		if (level <= 1)
+			previousLevelButton.setEnabled(false);
+		else
+			previousLevelButton.setEnabled(true);
+
+		if (level < getHighestLevelCompleted())
+			nextLevelButton.setEnabled(true);
+		else
+			nextLevelButton.setEnabled(false);
 	}
 
 	public void updateCell(int x, int y) {
@@ -392,4 +431,39 @@ public class BoardComposite extends Composite {
 		clicksCountLabel.setValue(new Integer(0));
 	}
 
+	public void setScoreIfBetter(int level, int clicks) {
+		if (getScoreForLevel(level) > clicks)
+			setScoreForLevel(level, clicks);
+	}
+
+	/**
+	 * 
+	 * @param level
+	 * @return Integer.MAX_VALUE if no score for given level
+	 */
+	public int getScoreForLevel(int level) {
+		Integer score = scoreBoard.get(new Integer(level));
+
+		if (score != null)
+			return score.intValue();
+		else
+			return Integer.MAX_VALUE;
+	}
+
+	public void setScoreForLevel(int level, int clicks) {
+		scoreBoard.put(new Integer(level), new Integer(clicks));
+	}
+
+	public int getHighestLevelCompleted() {
+		int highest = 1;
+
+		for (Integer entry : scoreBoard.keySet()) {
+			int level = entry.intValue();
+
+			if (level > highest)
+				highest = entry;
+		}
+
+		return highest;
+	}
 }
