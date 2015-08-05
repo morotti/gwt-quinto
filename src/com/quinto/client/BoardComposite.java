@@ -66,7 +66,6 @@ public class BoardComposite extends Composite {
 		grid_1.setBorderWidth(0);
 		horizontalPanel.add(grid_1);
 		horizontalPanel.setCellVerticalAlignment(grid_1, HasVerticalAlignment.ALIGN_MIDDLE);
-		horizontalPanel.setCellHorizontalAlignment(grid_1, HasHorizontalAlignment.ALIGN_CENTER);
 		grid_1.setSize("64px", "64px");
 
 		Label lblNewLabel_1 = new Label("Blacks: ");

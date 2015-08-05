@@ -125,10 +125,12 @@ p {
 
 #game {
 	clear: both;
+	width: 100%;
 }
 
 #game-help {
 	clear: both;
+	width: 100%;
 }
 
 #footer {
