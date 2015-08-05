@@ -137,7 +137,7 @@ public class BoardComposite extends Composite {
 				int x = cell.getCellIndex();
 				int y = cell.getRowIndex();
 
-				BoardComposite.this.click(x, y);
+				BoardComposite.this.onClick(x, y);
 			}
 		});
 		initWidget(flowPanel);
@@ -223,10 +223,11 @@ public class BoardComposite extends Composite {
 		}
 
 		updateCounters();
+		updatePoints();
 		resetClicks();
 	}
 
-	public void click(int x, int y) {
+	public void onClick(int x, int y) {
 		board.click(x, y);
 
 		updateCell(x, y);
@@ -244,6 +245,7 @@ public class BoardComposite extends Composite {
 			updateCell(x + 1, y);
 
 		updateCounters();
+		updatePoints();
 		incrementClicks();
 
 		if (board.isWon()) {
@@ -252,18 +254,14 @@ public class BoardComposite extends Composite {
 	}
 
 	private void onVictory() {
-		int points = pointsLabel.getValue().intValue();
 		final int level = levelLabel.getValue().intValue();
 		final int clicks = clicksCountLabel.getValue().intValue();
 		final int width = grid.getColumnCount();
 		final int height = grid.getRowCount();
 
-		// update points
-		points += estimatePoints(level, width, height, clicks);
-		pointsLabel.setValue(new Integer(points));
-
 		// update scoreboard
 		setScoreIfBetter(level, clicks);
+		updatePoints();
 
 		// estimate rating
 		int rating = estimateRating(width, height, clicks);
@@ -294,7 +292,7 @@ public class BoardComposite extends Composite {
 	 * @param clicks
 	 * @return rating between 0 and 3
 	 */
-	private int estimateRating(int width, int height, int clicks) {
+	private static int estimateRating(int width, int height, int clicks) {
 		int minClicks = getMinClicks(width, height);
 
 		// player did the minimum possible clicks => awesome
@@ -321,6 +319,11 @@ public class BoardComposite extends Composite {
 		return points * 10;
 	}
 
+	/**
+	 * @param width
+	 * @param height
+	 * @return minimum clicks required to complete a grid of the given size
+	 */
 	private static int getMinClicks(int width, int height) {
 		// @formatter:off
 		
@@ -383,8 +386,8 @@ public class BoardComposite extends Composite {
 			//  even -> [3,2] x++
 			//   odd -> [3,3] y++
 
-			int width = ((level + 2) / 2) + (level % 2);
-			int height = ((level + 2) / 2);
+			int width = getLevelWidth(level);
+			int height = getLevelHeight(level);
 
 			generateGrid(width, height);
 		}
@@ -399,6 +402,16 @@ public class BoardComposite extends Composite {
 			nextLevelButton.setEnabled(true);
 		else
 			nextLevelButton.setEnabled(false);
+	}
+
+	public static int getLevelWidth(int level) {
+		int width = ((level + 2) / 2) + (level % 2);
+		return width;
+	}
+
+	public static int getLevelHeight(int level) {
+		int height = ((level + 2) / 2);
+		return height;
 	}
 
 	public void updateCell(int x, int y) {
@@ -416,6 +429,20 @@ public class BoardComposite extends Composite {
 				updateCell(x, y);
 			}
 		}
+	}
+
+	public void updatePoints() {
+		int total = 0;
+
+		for (HashMap.Entry<Integer, Integer> entry : scoreBoard.entrySet()) {
+			int level = entry.getKey().intValue();
+			int clicks = entry.getValue().intValue();
+
+			int points = estimatePoints(level, getLevelWidth(level), getLevelHeight(level), clicks);
+			total += points;
+		}
+
+		pointsLabel.setValue(new Integer(total));
 	}
 
 	public void updateCounters() {
