@@ -251,10 +251,10 @@ public class BoardComposite extends Composite {
 
 	private void onVictory() {
 		int points = pointsLabel.getValue().intValue();
-		int level = levelLabel.getValue().intValue();
-		int clicks = clicksCountLabel.getValue().intValue();
-		int width = grid.getColumnCount();
-		int height = grid.getRowCount();
+		final int level = levelLabel.getValue().intValue();
+		final int clicks = clicksCountLabel.getValue().intValue();
+		final int width = grid.getColumnCount();
+		final int height = grid.getRowCount();
 
 		// update points
 		points += estimatePoints(level, width, height, clicks);
@@ -277,7 +277,6 @@ public class BoardComposite extends Composite {
 			public void run() {
 				victoryBox.hide();
 
-				int level = levelLabel.getValue().intValue();
 				BoardComposite.this.gotoLevel(level + 1);
 			}
 		};
