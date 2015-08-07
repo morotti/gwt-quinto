@@ -14,21 +14,20 @@ p {
 .starbox {
 	width: 48px;
 	height: 48px;
-	vertical-align: center;
 }
 
 .social-icon-container {
 	clear: both;
 	margin: 0 auto;
-	width: 32px;
-	height 32px;
-	padding: 8px;
 }
 
 .social-icon {
 	border: none;
 	vertical-align: middle;
 	text-align: center;
+	width: 32px;
+	height: 32px;
+	padding: 8px;
 }
 
 .bigboldtext {
@@ -95,26 +94,31 @@ p {
 	width: 100%;
 	height: 64px;
 	background: #DADADA;
-	text-align: center;
 	font-weight: bold;
 	font-size: 24px;
 	margin: 0px;
 	padding: 0px;
+	display: table;
 }
 
 .centered {
-	display: inline-block;
-	line-height: 64px;
+	display: table-cell;
 	height: 100%;
 	vertical-align: middle;
+	text-align: center;
 	margin: 0px;
 	padding: 0px;
 }
 
 #leftcolumn {
+	display: table;
 	background: none;
-	width: 100px;
-	float: left;
+	width: 64px;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
 }
 
 #content {
