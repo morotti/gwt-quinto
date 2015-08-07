@@ -17,6 +17,20 @@ p {
 	vertical-align: center;
 }
 
+.social-icon-container {
+	clear: both;
+	margin: 0 auto;
+	width: 32px;
+	height 32px;
+	padding: 8px;
+}
+
+.social-icon {
+	border: none;
+	vertical-align: middle;
+	text-align: center;
+}
+
 .bigboldtext {
 	font-size: 24px;
 	font-weight: bold;
