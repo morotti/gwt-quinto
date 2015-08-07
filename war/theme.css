@@ -87,12 +87,12 @@ p {
 
 #wrapper {
 	margin: 0 auto;
-	width: 800px;
+	width: 45%;
 }
 
 #header {
 	float: left;
-	width: 800px;
+	width: 100%;
 	height: 64px;
 	background: #DADADA;
 	text-align: center;
@@ -111,29 +111,16 @@ p {
 	padding: 0px;
 }
 
-#navigation {
-	float: left;
-	height: 40px;
-	width: 100%;
-	background: #FFCC33;
-}
-
 #leftcolumn {
-	background: #33CCFF;
+	background: none;
 	width: 100px;
 	float: left;
-}
-
-#rightcolumn {
-	background: #CC33FF;
-	width: 100px;
-	float: right;
 }
 
 #content {
 	background: #EBEBEB;
-	width: 500px;
-	padding: 50px;
+	width: 80%;
+	padding: 10px 10% 10px 10%;
 	float: left;
 }
 
