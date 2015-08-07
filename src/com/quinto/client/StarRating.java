@@ -10,8 +10,8 @@ public class StarRating extends Composite {
 	private Image center;
 	private Image right;
 
-	private final String yellow = "star_yellow.svg";
-	private final String grey = "star_grey.svg";
+	private final String yellow = "img/star_yellow.svg";
+	private final String grey = "img/star_grey.svg";
 
 	public StarRating(int rating) {
 
