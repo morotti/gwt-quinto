@@ -1,14 +1,8 @@
-# Quinto
-
-##Introduction
-This project is an online quinto game.
-
-##Game Principles
-
-The quinto game is played on a black and white board like this.
-
+# The Quinto Game
+https://the-quinto-game.appspot.com/
+#### Gameplay
 ![picture of the board](https://github.com/morotti/quinto/blob/master/example.png "3x3 quinto board example")
 
-Click on a cell to reverse its color and the colors of its neighbors.
+The quinto game is played on a black and white board. Click on a cell to reverse its color and the colors of its neighbors.
 
-At the start, all cells are white. You win when you made them all black.
+All cells are white at the beginning. Turn them all black to win.
