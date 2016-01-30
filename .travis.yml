@@ -16,7 +16,7 @@ before_deploy:
 
 deploy:
     provider: gae
-    config: "war/WEB-INF/appengine-web.xml"
+    config: "war/WEB-INF/app.yml"
     keyfile: the-quinto-game-d2b447a3fef2.json
     project: the-quinto-game
     default: true

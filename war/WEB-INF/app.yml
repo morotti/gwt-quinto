@@ -1,0 +1,5 @@
+application: the-quinto-game
+version: 1
+runtime: java
+threadsafe: true
+sessions_enabled: false
