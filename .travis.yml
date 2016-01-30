@@ -10,6 +10,9 @@ jdk:
 install:
     - echo "nothing to build"
 
+test:
+    echo "nothing to test"
+
 before_deploy:
     - base64 -d "$KEYFILE_BASE64" > the-quinto-game-d2b447a3fef2.json
 
