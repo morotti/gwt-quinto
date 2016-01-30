@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.NumberLabel;
 import com.google.gwt.event.dom.client.ClickHandler;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -444,7 +445,7 @@ public class BoardComposite extends Composite {
 	public void updatePoints() {
 		int total = 0;
 
-		for (HashMap.Entry<Integer, Integer> entry : scoreBoard.entrySet()) {
+		for (Entry<Integer, Integer> entry : scoreBoard.entrySet()) {
 			int level = entry.getKey().intValue();
 			int clicks = entry.getValue().intValue();
 
