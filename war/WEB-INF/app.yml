@@ -4,8 +4,8 @@ runtime: java
 threadsafe: true
 
 welcome_files:
-  - QuintoOnline.html
-  
+    - QuintoOnline.html
+
 system_properties:
     java.util.logging.config.file: WEB-INF/logging.properties
 
