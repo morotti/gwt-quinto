@@ -3,12 +3,20 @@ notifications:
 
 language: java
 
+jdk:
+    - oraclejdk7
+    - openjdk7
+
+install:
+    echo "nothing to build"
+
+before_deploy:
+    base64 -d "$KEYFILE_BASE64" > the-quinto-game-d2b447a3fef2.json
+
 deploy:
     provider: gae
     config: "src/main/webapp/WEB-INF/appengine-web.xml"
     keyfile: the-quinto-game-d2b447a3fef2.json
-    project: "the-quinto-game"
+    project: the-quinto-game
     default: true
 
-before_deploy:
-    base64 -d "$KEYFILE_BASE64" > the-quinto-game-d2b447a3fef2.json
